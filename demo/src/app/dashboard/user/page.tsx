@@ -1,5 +1,6 @@
 'use client';
 import React, { useState } from 'react';
+import "./user.css";
 
 import {
   DesktopOutlined,
@@ -10,6 +11,7 @@ import {
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
+import { Solitreo } from 'next/font/google';
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -33,9 +35,9 @@ const items: MenuItem[] = [
   getItem('Option 1', '1', <PieChartOutlined />),
   getItem('Option 2', '2', <DesktopOutlined />),
   getItem('User', 'sub1', <UserOutlined />, [
-    getItem('Tom', '3'),
-    getItem('Bill', '4'),
-    getItem('Alex', '5'),
+    getItem('Staff', '3'),
+    getItem('Admin', '4'),
+    getItem('Students', '5'),
   ]),
   getItem('Team', 'sub2', <TeamOutlined />, [getItem('Team 1', '6'), getItem('Team 2', '8')]),
   getItem('Files', '9', <FileOutlined />),
@@ -57,15 +59,14 @@ const App: React.FC = () => {
         <Header style={{ padding: 0, background: colorBgContainer }} />
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
-          <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-            }}
-          >
-            Bill is a cat.
+          <div style={{padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG, }}>
+            <table className='Table'>
+              <thead>
+                <th>ID</th>
+                <th>Full name</th>
+                <th>Username</th>
+              </thead>
+            </table>
           </div>
         </Content>
         <Footer style={{ textAlign: 'center' }}>
