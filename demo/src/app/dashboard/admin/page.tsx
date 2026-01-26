@@ -6,6 +6,7 @@ import type { TableColumnsType, TableProps } from 'antd';
 import AdminSidebar from '@/app/components/layout/AdminSidebar';
 import AdminHeader from '@/app/components/layout/AdminHeader';
 import AdminFooter from '@/app/components/layout/AdminFooter';
+import "./admin.css";
 
 const UserPage = () => {
   const { Header, Content, Footer, Sider } = Layout;
