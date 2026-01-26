@@ -1,11 +1,11 @@
 'use client';
 import React, { useState } from 'react';
-
-import { Breadcrumb, Layout, Menu, theme, Button, Space, Table } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import AdminSidebar from '@/app/components/layout/AdminSidebar';
 import AdminHeader from '@/app/components/layout/AdminHeader';
 import AdminFooter from '@/app/components/layout/AdminFooter';
+import type { ColumnsType } from 'antd/es/table';
 import "./admin.css";
 
 const UserPage = () => {
@@ -14,110 +14,109 @@ const UserPage = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
-  type OnChange = NonNullable<TableProps<DataType>['onChange']>;
-  type Filters = Parameters<OnChange>[1];
 
-  type GetSingle<T> = T extends (infer U)[] ? U : never;
-  type Sorts = GetSingle<Parameters<OnChange>[2]>;
+  const [open, setOpen] = useState(false);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const [form] = Form.useForm<User>();
 
-  interface DataType {
-    key: string;
+  // ➕ Thêm
+  const handleAdd = () => {
+    setEditingUser(null);
+    form.resetFields();
+    setOpen(true);
+  };
+
+  // Lưu (thêm hoặc sửa)
+  const handleOk = async () => {
+    const values = await form.validateFields();
+
+    // Kiểm tra trùng ID khi THÊM
+    if (!editingUser) {
+      const exists = data.some(item => item.id === values.id);
+      if (exists) {
+        form.setFields([
+          {
+            name: 'id',
+            errors: ['ID đã tồn tại'],
+          },
+        ]);
+        return;
+      }
+    }
+
+    if (editingUser) {
+      setData(data.map(item =>
+        item.id === editingUser.id ? values : item
+      ));
+    } else {
+      setData([...data, values]);
+    }
+
+    setOpen(false);
+  };
+
+  // ✏️ Sửa
+  const handleEdit = (record: User) => {
+    setEditingUser(record);
+    form.setFieldsValue(record);
+    setOpen(true);
+  };
+
+  // 🗑 Xoá
+  const handleDelete = (id: number) => {
+    setData(data.filter(item => item.id !== id));
+  };
+
+  interface User {
+    id: number;
     name: string;
-    age: number;
     address: string;
   }
 
-  const data: DataType[] = [
+  const [data, setData] = useState<User[]>([
+    { id: 1, name: 'Nguyễn Văn A', address: 'Hà Nội' },
+    { id: 2, name: 'Trần Thị B', address: 'TP.HCM' },
+  ]);
+
+  const columns: ColumnsType<User> = [
     {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
+      title: 'ID',
+      dataIndex: 'id',
+      width: 120,
+      sorter: (a, b) => a.id - b.id,
+      sortDirections: ['ascend', 'descend'],
     },
     {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-    },
-    {
-      key: '4',
-      name: 'Jim Red',
-      age: 32,
-      address: 'London No. 2 Lake Park',
-    },
-  ];
-
-  const [filteredInfo, setFilteredInfo] = useState<Filters>({});
-  const [sortedInfo, setSortedInfo] = useState<Sorts>({});
-
-  const handleChange: OnChange = (pagination, filters, sorter) => {
-    console.log('Various parameters', pagination, filters, sorter);
-    setFilteredInfo(filters);
-    setSortedInfo(sorter as Sorts);
-  };
-
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: 'descend',
-      columnKey: 'age',
-    });
-  };
-
-  const columns: TableColumnsType<DataType> = [
-    {
-      title: 'Name',
+      title: 'Tên',
       dataIndex: 'name',
-      key: 'name',
-      filters: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' },
-      ],
-      filteredValue: filteredInfo.name || null,
-      onFilter: (value, record) => record.name.includes(value as string),
-      sorter: (a, b) => a.name.length - b.name.length,
-      sortOrder: sortedInfo.columnKey === 'name' ? sortedInfo.order : null,
-      ellipsis: true,
+      sorter: (a, b) => a.name.localeCompare(b.name),
+      sortDirections: ['ascend', 'descend'],
     },
     {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-      sorter: (a, b) => a.age - b.age,
-      sortOrder: sortedInfo.columnKey === 'age' ? sortedInfo.order : null,
-      ellipsis: true,
-    },
-    {
-      title: 'Address',
+      title: 'Địa chỉ',
       dataIndex: 'address',
-      key: 'address',
-      filters: [
-        { text: 'London', value: 'London' },
-        { text: 'New York', value: 'New York' },
-      ],
-      filteredValue: filteredInfo.address || null,
-      onFilter: (value, record) => record.address.includes(value as string),
-      sorter: (a, b) => a.address.length - b.address.length,
-      sortOrder: sortedInfo.columnKey === 'address' ? sortedInfo.order : null,
-      ellipsis: true,
+      sorter: (a, b) => a.address.localeCompare(b.address),
+      sortDirections: ['ascend', 'descend'],
+    },
+    {
+      title: 'Hành động',
+      render: (_, record) => (
+        <Space>
+          <Button type="link" onClick={() => handleEdit(record)}>
+            Sửa
+          </Button>
+          <Popconfirm
+            title="Xoá người dùng?"
+            onConfirm={() => handleDelete(record.id)}
+          >
+            <Button danger type="link">
+              Xoá
+            </Button>
+          </Popconfirm>
+        </Space>
+      ),
     },
   ];
-
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -126,14 +125,53 @@ const UserPage = () => {
         <AdminHeader />
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
-          <div style={{ padding: 24, minHeight: 360, background: colorBgContainer, borderRadius: borderRadiusLG, }}>
-            <Space style={{ marginBottom: 16 }}>
-              <Button onClick={setAgeSort}>Sort age</Button>
-              <Button onClick={clearFilters}>Clear filters</Button>
-              <Button onClick={clearAll}>Clear filters and sorters</Button>
-            </Space>
-            <Table<DataType> columns={columns} dataSource={data} onChange={handleChange} />
-          </div>
+          <Button type="primary" className="add-btn">
+            + Thêm người dùng
+          </Button>
+
+
+          <Table
+            rowKey="id"
+            columns={columns}
+            dataSource={data}
+            bordered
+            className="custom-table"
+          />
+
+          <Modal
+            title={editingUser ? 'Sửa người dùng' : 'Thêm người dùng'}
+            open={open}
+            onOk={handleOk}
+            onCancel={() => setOpen(false)}
+            okText="Lưu"
+          >
+            <Form form={form} layout="vertical">
+              <Form.Item
+                name="id"
+                label="ID"
+                rules={[
+                  { required: true, message: 'Nhập ID' },
+                ]}
+              >
+                <Input type="number" />
+              </Form.Item>
+              <Form.Item
+                name="name"
+                label="Tên"
+                rules={[{ required: true, message: 'Nhập tên' }]}
+              >
+                <Input />
+              </Form.Item>
+
+              <Form.Item
+                name="address"
+                label="Địa chỉ"
+                rules={[{ required: true, message: 'Nhập địa chỉ' }]}
+              >
+                <Input />
+              </Form.Item>
+            </Form>
+          </Modal>
         </Content>
         <AdminFooter />
       </Layout>
