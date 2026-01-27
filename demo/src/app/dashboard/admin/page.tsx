@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal, Tooltip } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import AdminSidebar from '@/app/components/layout/AdminSidebar';
 import AdminHeader from '@/app/components/layout/AdminHeader';
@@ -82,7 +82,7 @@ const UserPage = () => {
   ];
 
   const addresses = [
-    'Hà Nội',
+    'Hà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà Nội',
     'TP.HCM',
     'Đà Nẵng',
     'Cần Thơ',
@@ -126,13 +126,19 @@ const UserPage = () => {
     {
       title: 'Địa chỉ',
       dataIndex: 'address',
-      sorter: (a, b) => a.address.localeCompare(b.address),
-      sortDirections: ['ascend', 'descend'],
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (text: string) => (
+        <Tooltip placement="topLeft" title={text}>
+          {text}
+        </Tooltip>
+      ),
     },
     {
       title: 'Hành động',
       render: (_, record) => (
-        <Space>
+        <Space className='space'>
           <Button type="link" onClick={() => handleEdit(record)}>
             Sửa
           </Button>
