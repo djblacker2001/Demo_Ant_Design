@@ -19,7 +19,7 @@ const UserPage = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [form] = Form.useForm<User>();
 
-  // ➕ Thêm
+  // Thêm
   const handleAdd = () => {
     setEditingUser(null);
     form.resetFields();
@@ -55,14 +55,14 @@ const UserPage = () => {
     setOpen(false);
   };
 
-  // ✏️ Sửa
+  // Sửa
   const handleEdit = (record: User) => {
     setEditingUser(record);
     form.setFieldsValue(record);
     setOpen(true);
   };
 
-  // 🗑 Xoá
+  // Xoá
   const handleDelete = (id: number) => {
     setData(data.filter(item => item.id !== id));
   };
@@ -73,6 +73,7 @@ const UserPage = () => {
     address: string;
   }
 
+  // Dữ liệu mặc định
   const [data, setData] = useState<User[]>([
     { id: 1, name: 'Nguyễn Văn A', address: 'Hà Nội' },
     { id: 2, name: 'Trần Thị B', address: 'TP.HCM' },
@@ -125,11 +126,9 @@ const UserPage = () => {
         <AdminHeader />
         <Content style={{ margin: '0 16px' }}>
           <Breadcrumb style={{ margin: '16px 0' }} items={[{ title: 'User' }, { title: 'Bill' }]} />
-          <Button type="primary" className="add-btn">
+          <Button type="primary" className="add-btn" onClick={handleAdd}>
             + Thêm người dùng
           </Button>
-
-
           <Table
             rowKey="id"
             columns={columns}
@@ -137,7 +136,6 @@ const UserPage = () => {
             bordered
             className="custom-table"
           />
-
           <Modal
             title={editingUser ? 'Sửa người dùng' : 'Thêm người dùng'}
             open={open}
