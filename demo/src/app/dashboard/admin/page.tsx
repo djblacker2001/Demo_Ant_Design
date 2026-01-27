@@ -73,11 +73,41 @@ const UserPage = () => {
     address: string;
   }
 
+  const names = [
+    'Nguyễn Văn A',
+    'Trần Thị B',
+    'Lê Văn C',
+    'Phạm Thị D',
+    'Hoàng Văn E',
+  ];
+
+  const addresses = [
+    'Hà Nội',
+    'TP.HCM',
+    'Đà Nẵng',
+    'Cần Thơ',
+    'Hải Phòng',
+  ];
+
+  const generateUsers = (count: number): User[] => {
+    return Array.from({ length: count }, (_, index) => ({
+      id: index + 1, // ID khác nhau
+      name: names[index % names.length], // tên có thể trùng
+      address: addresses[index % addresses.length], // địa chỉ có thể trùng
+    }));
+  };
+
+  // 👇 dùng cho Table
+  const [data, setData] = useState<User[]>(generateUsers(300));
+
+
   // Dữ liệu mặc định
-  const [data, setData] = useState<User[]>([
-    { id: 1, name: 'Nguyễn Văn A', address: 'Hà Nội' },
-    { id: 2, name: 'Trần Thị B', address: 'TP.HCM' },
-  ]);
+  // const [data, setData] = useState<User[]>([
+  //   { id: 1, name: 'Nguyễn Văn A', address: 'Hà Nội' },
+  //   { id: 2, name: 'Trần Thị B', address: 'TP.HCM' },
+  // ]);
+
+
 
   const columns: ColumnsType<User> = [
     {
