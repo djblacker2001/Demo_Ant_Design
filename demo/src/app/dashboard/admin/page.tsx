@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal, Tooltip } from 'antd';
+import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal, Tooltip, InputNumber } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import AdminSidebar from '@/app/components/layout/AdminSidebar';
 import AdminHeader from '@/app/components/layout/AdminHeader';
@@ -187,10 +187,23 @@ const UserPage = () => {
                 name="id"
                 label="ID"
                 rules={[
-                  { required: true, message: 'Nhập ID' },
+                  { required: true, message: 'Vui lòng nhập ID' },
+                  {
+                    validator: (_, value) => {
+                      if (Number.isInteger(value)) {
+                        return Promise.resolve();
+                      }
+                      return Promise.reject(new Error('ID phải là số nguyên'));
+                    },
+                  },
                 ]}
               >
-                <Input type="number" />
+                <InputNumber
+                  style={{ width: '100%' }}
+                  min={1}
+                  precision={0}
+                  placeholder="Nhập ID"
+                />
               </Form.Item>
               <Form.Item
                 name="name"

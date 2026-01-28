@@ -8,7 +8,7 @@
 //css login
 //Xử lý dữ liệu dài trong một ô
 
-???
+//???
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
@@ -19,12 +19,14 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-Cac kiểu dữ liệu trong typescript và chúng xài như thế nào
+Cac kiểu dữ liệu trong typescript và chúng xài như thế nào: 
 interface User {
 id: number;
 name: string;
 address: string;
 }
+
+Câu trả lời: boolean, number, String, null
 
 Usestate là gì
 Use...???
