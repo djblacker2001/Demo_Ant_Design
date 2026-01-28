@@ -7,6 +7,8 @@ import AdminHeader from '@/app/components/layout/AdminHeader';
 import AdminFooter from '@/app/components/layout/AdminFooter';
 import type { ColumnsType } from 'antd/es/table';
 import "./admin.css";
+import TextArea from 'antd/es/input/TextArea';
+import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 const UserPage = () => {
   const { Header, Content, Footer, Sider } = Layout;
@@ -60,6 +62,7 @@ const UserPage = () => {
     setEditingUser(record);
     form.setFieldsValue(record);
     setOpen(true);
+    console.log(record.name);
   };
 
   // Xoá
@@ -98,7 +101,7 @@ const UserPage = () => {
     }));
   };
 
-  // 👇 dùng cho Table
+  // dùng cho Table
   const [data, setData] = useState<User[]>(generateUsers(300));
 
 
@@ -114,7 +117,6 @@ const UserPage = () => {
     {
       title: 'ID',
       dataIndex: 'id',
-      width: 120,
       sorter: (a, b) => a.id - b.id,
       sortDirections: ['ascend', 'descend'],
     },
@@ -140,15 +142,15 @@ const UserPage = () => {
       title: 'Hành động',
       render: (_, record) => (
         <Space className='space'>
-          <Button type="link" onClick={() => handleEdit(record)}>
-            Sửa
+          <Button type="link" onClick={() => handleEdit(record)} className='editBtn'>
+            <EditOutlined /> Sửa
           </Button>
           <Popconfirm
             title="Xoá người dùng?"
             onConfirm={() => handleDelete(record.id)}
           >
-            <Button danger type="link">
-              Xoá
+            <Button danger type="link" className='deleteBtn'>
+              <DeleteOutlined /> Xoá
             </Button>
           </Popconfirm>
         </Space>
@@ -203,7 +205,7 @@ const UserPage = () => {
                 label="Địa chỉ"
                 rules={[{ required: true, message: 'Nhập địa chỉ' }]}
               >
-                <Input />
+                <Input.TextArea rows={5} />
               </Form.Item>
             </Form>
           </Modal>
