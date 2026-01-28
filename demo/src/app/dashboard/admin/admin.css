@@ -66,6 +66,10 @@
   .space {
     display: block
   }
+
+  .editBtn {
+    margin-bottom: 5px;
+  }
 }
 
 
