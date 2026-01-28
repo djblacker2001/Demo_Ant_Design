@@ -89,6 +89,7 @@ const UserPage = () => {
     'Hải Phòng',
   ];
 
+  //Tạo dữ liệu lặp
   const generateUsers = (count: number): User[] => {
     return Array.from({ length: count }, (_, index) => ({
       id: index + 1, // ID khác nhau
