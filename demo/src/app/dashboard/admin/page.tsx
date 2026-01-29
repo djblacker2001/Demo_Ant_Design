@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Breadcrumb, Layout, Menu, theme, Button, Space, Table, Form, Popconfirm, Input, Modal, Tooltip, InputNumber } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import AdminSidebar from '@/app/components/layout/AdminSidebar';
@@ -10,7 +10,23 @@ import "./admin.css";
 import TextArea from 'antd/es/input/TextArea';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
+interface User {
+    id: number;
+    name: string;
+    address: string;
+  }
+
 const UserPage = () => {
+  //Tạo dữ liệu lặp
+  // const generateUsers = (count: number): User[] => {
+  //   return Array.from({ length: count }, (_, index) => ({
+  //     id: index + 1, // ID khác nhau
+  //     name: names[index % names.length], // tên có thể trùng
+  //     address: addresses[index % addresses.length], // địa chỉ có thể trùng
+  //   }));
+  // };
+  
+  const [data, setData] = useState<User[]>([]);
   const { Header, Content, Footer, Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
   const {
@@ -21,11 +37,24 @@ const UserPage = () => {
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [form] = Form.useForm<User>();
 
+  useEffect(() => {
+    const saved = localStorage.getItem('users');
+    if (saved) {
+      setData(JSON.parse(saved));
+    }
+  }, []);
+
+
+  useEffect(() => {
+    localStorage.setItem('users', JSON.stringify(data));
+  }, [data]);
+
   // Thêm
   const handleAdd = () => {
     setEditingUser(null);
     form.resetFields();
     setOpen(true);
+    console.log("Added");
   };
 
   // Lưu (thêm hoặc sửa)
@@ -69,49 +98,6 @@ const UserPage = () => {
   const handleDelete = (id: number) => {
     setData(data.filter(item => item.id !== id));
   };
-
-  interface User {
-    id: number;
-    name: string;
-    address: string;
-  }
-
-  const names = [
-    'Nguyễn Văn A',
-    'Trần Thị B',
-    'Lê Văn C',
-    'Phạm Thị D',
-    'Hoàng Văn E',
-  ];
-
-  const addresses = [
-    'Hà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà NộiHà Nội',
-    'TP.HCM',
-    'Đà Nẵng',
-    'Cần Thơ',
-    'Hải Phòng',
-  ];
-
-  //Tạo dữ liệu lặp
-  const generateUsers = (count: number): User[] => {
-    return Array.from({ length: count }, (_, index) => ({
-      id: index + 1, // ID khác nhau
-      name: names[index % names.length], // tên có thể trùng
-      address: addresses[index % addresses.length], // địa chỉ có thể trùng
-    }));
-  };
-
-  // dùng cho Table
-  const [data, setData] = useState<User[]>(generateUsers(300));
-
-
-  // Dữ liệu mặc định
-  // const [data, setData] = useState<User[]>([
-  //   { id: 1, name: 'Nguyễn Văn A', address: 'Hà Nội' },
-  //   { id: 2, name: 'Trần Thị B', address: 'TP.HCM' },
-  // ]);
-
-
 
   const columns: ColumnsType<User> = [
     {
@@ -157,6 +143,8 @@ const UserPage = () => {
       ),
     },
   ];
+
+  
 
   return (
     <Layout style={{ minHeight: '100vh' }}>

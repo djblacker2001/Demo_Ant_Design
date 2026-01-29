@@ -71,38 +71,32 @@
   </style>
 </head>
 <body>
-  <div class="login-box">
-    <h2>Đăng nhập</h2>
-    <form id="loginForm">
-      <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="email" placeholder="Nhập email" required />
-      </div>
-      <div class="form-group">
-        <label>Mật khẩu</label>
-        <input type="password" id="password" placeholder="Nhập mật khẩu" required />
-      </div>
-      <button type="submit" class="btn">Đăng nhập</button>
-      <div class="error" id="error">Email hoặc mật khẩu không đúng</div>
-    </form>
-    <div class="extra">
-      <a href="#">Quên mật khẩu?</a> | <a href="#">Đăng ký</a>
-    </div>
-  </div>
 
   <script>
-    document.getElementById('loginForm').addEventListener('submit', function(e) {
-      e.preventDefault();
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+    let user = {name:"Huy" , infor:() => console.log("Nam")}
+    if(user) {
+      console.log(user.name)
+    }
+    user?.infor()
+    console.log(typeof null);
 
-      // Demo kiểm tra đăng nhập
-      if (email === 'admin@gmail.com' && password === '123456') {
-        alert('Đăng nhập thành công!');
+    function checkNullUndefine(x) {
+      if(x) {
+        console.log("ifx x is OK");
       } else {
-        document.getElementById('error').style.display = 'block';
+        console.log("ifx Null of Undefine");
       }
-    });
+
+      if(x == undefined) {
+        console.log("ifUn Null of Undefine");
+      } else {
+        console.log("ifUn x is OK");
+      }
+    }
+
+    let x = "";
+    checkNullUndefine(x);
+    console.log(null == undefined)
   </script>
 </body>
 </html>

@@ -26,7 +26,13 @@ name: string;
 address: string;
 }
 
-Câu trả lời: boolean, number, String, null
+Câu trả lời: boolean, number, String, null undifine
 
 Usestate là gì
 Use...???
+
+null undifine khác nhau ntn?
+
+"data và setdata khác nhau ntn"?
+const [data, setData] = useState<User[]>(generateUsers(300));
+Tìm hiểu khái niệm render và rerender?
