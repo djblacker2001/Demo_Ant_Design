@@ -144,8 +144,6 @@ const UserPage = () => {
     },
   ];
 
-  
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <AdminSidebar />

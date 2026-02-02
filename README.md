@@ -36,3 +36,4 @@ null undifine khác nhau ntn?
 "data và setdata khác nhau ntn"?
 const [data, setData] = useState<User[]>(generateUsers(300));
 Tìm hiểu khái niệm render và rerender?
+Khi nào sử dụng render, khi nào dùng rerender 
