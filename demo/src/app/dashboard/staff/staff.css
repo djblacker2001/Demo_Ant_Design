@@ -1,0 +1,76 @@
+
+.custom-table {
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 5px;
+}
+
+.custom-table .ant-table-thead > tr > th {
+  background-color: #ffcccc;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 13px;
+}
+
+.custom-table .ant-table-tbody > tr > td {
+  font-size: 14px;
+}
+
+.custom-table .ant-table-tbody > tr.ant-table-row:hover > td {
+  background-color: #d1d1d1;
+}
+
+.custom-table .ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.custom-table .ant-btn-link {
+  padding: 0 4px;
+}
+
+.custom-table .ant-btn-dangerous:hover {
+  opacity: 0.85;
+}
+
+.custom-table .ant-table-tbody > tr:nth-child(even) > td {
+  background-color: #e0e0e0;
+}
+
+.custom-table .ant-table-tbody > tr > td:first-child {
+  text-align: center;
+}
+
+.custom-table .ant-table-tbody > tr > td:last-child {
+  text-align: left;
+}
+
+.add-btn {
+  margin-bottom: 16px;
+  border-radius: 6px;
+}
+
+.space {
+  display: flex;
+}
+
+.editBtn {
+  border: 1px solid black;
+}
+
+.deleteBtn {
+  border: 1px solid black;
+}
+
+@media (max-width: 768px) {
+  .space {
+    display: block
+  }
+
+  .editBtn {
+    margin-bottom: 5px;
+  }
+}
+
+
+
