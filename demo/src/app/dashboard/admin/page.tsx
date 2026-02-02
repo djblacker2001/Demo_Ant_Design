@@ -11,10 +11,10 @@ import TextArea from 'antd/es/input/TextArea';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
 
 interface User {
-    id: number;
-    name: string;
-    address: string;
-  }
+  id: number;
+  name: string;
+  address: string;
+}
 
 const UserPage = () => {
   //Tạo dữ liệu lặp
@@ -25,7 +25,7 @@ const UserPage = () => {
   //     address: addresses[index % addresses.length], // địa chỉ có thể trùng
   //   }));
   // };
-  
+
   const [data, setData] = useState<User[]>([]);
   const { Header, Content, Footer, Sider } = Layout;
   const [collapsed, setCollapsed] = useState(false);
@@ -46,7 +46,7 @@ const UserPage = () => {
 
 
   useEffect(() => {
-    localStorage.setItem('users', JSON.stringify(data));
+    localStorage.setItem('app_users', JSON.stringify(data));
   }, [data]);
 
   // Thêm
@@ -165,7 +165,12 @@ const UserPage = () => {
             title={editingUser ? 'Sửa người dùng' : 'Thêm người dùng'}
             open={open}
             onOk={handleOk}
-            onCancel={() => setOpen(false)}
+            onCancel={() => {
+              setOpen(false);
+              form.resetFields();
+              setEditingUser(null);
+            }}
+
             okText="Lưu"
           >
             <Form form={form} layout="vertical">
