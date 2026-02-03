@@ -9,9 +9,10 @@ import type { TableColumnsType, TableProps } from 'antd';
 import AdminFooter from '../components/layout/AdminFooter';
 import AdminHeader from '../components/layout/AdminHeader';
 import { Content } from 'antd/es/layout/layout';
-import AdminSidebar from '../components/layout/AdminSidebar';
+
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import AdminSidebar from '../components/layout/AdminSidebar';
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
     const router = useRouter();

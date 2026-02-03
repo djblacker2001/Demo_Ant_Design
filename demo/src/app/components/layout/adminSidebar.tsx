@@ -35,8 +35,8 @@ const items: MenuItem[] = [
     ]),
 
     getItem('Team', 'team', <TeamOutlined />, [
-        getItem('Team 1', '/dashboard/team1'),
-        getItem('Team 2', '/dashboard/team2'),
+        getItem('Reander không tối ưu', '/dashboard/team1'),
+        getItem('Reander tối ưu', '/dashboard/team2'),
         getItem('Team 3', '/dashboard/team3'),
         getItem('Team 4', '/dashboard/team4'),
     ]),
