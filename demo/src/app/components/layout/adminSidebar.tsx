@@ -41,6 +41,15 @@ const items: MenuItem[] = [
         getItem('Team 4', '/dashboard/team4'),
     ]),
 
+    getItem('Hook', 'hook', <TeamOutlined />, [
+        getItem('UseState', '/dashboard/hook/usestate'),
+        getItem('UseEffect', '/dashboard/hook/useeffect'),
+        getItem('UseContext', '/dashboard/hook/usecontext'),
+        getItem('UseCallback', '/dashboard/hook/usecallback'),
+        getItem('UseMemo', '/dashboard/hook/usememo'),
+        getItem('UseReducer', '/dashboard/hook/usereducer'),
+    ]),
+
     getItem('Files', '/dashboard/files', <FileOutlined />),
 ];
 
